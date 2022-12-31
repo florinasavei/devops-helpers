@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file docker/build-agents/azure-pipeline/Dockerfile --tag asaveiflorin/dotnet-node-azureagent
+      run: docker build . --file docker/build-agents/azure-pipeline/Dockerfile_Dotnet+Node --tag asaveiflorin/dotnet-node-azureagent
