@@ -1,0 +1,16 @@
+FROM node:lts as node_base
+
+FROM mcr.microsoft.com/dotnet/sdk:latest as dotnetbuild
+COPY --from=node_base . .
+
+RUN apt-get update && apt-get install -y apt-transport-https
+
+# Install zip
+RUN apt-get update && apt-get install -y \
+    zip
+
+# # Install node LTS
+# RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
+# RUN apt-get install -y nodejs
+    
+ENV NODE_OPTIONS="--max_old_space_size=1536"
