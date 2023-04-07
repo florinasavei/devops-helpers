@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "SampleAzureFunction_HTTP_Client": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7254"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "httpPort": 34002,
+      "useSSL": false
+    }
+  }
+}
