@@ -70,13 +70,13 @@ namespace simple_mail_sender
                 mailMessage.Subject = emailSubject;
                 mailMessage.Body = emailBody;
 
-                log.LogInformation($"Sending email from '{senderEmail}' to benonesimulescu2017@gmail.com");
+                log.LogInformation($"Sending email from '{senderEmail}' to '{emailRecepient}'");
 
                 // Send the email
                 smtpClient.Send(mailMessage);
                 log.LogInformation("Email sent successfully.");
 
-                return new OkObjectResult($"Mail sent from email '{senderEmail}' to '{emailRecepient}' with the subhect : {emailSubject}");
+                return new OkObjectResult($"Mail sent from email '{senderEmail}' to '{emailRecepient}' with the subject : '{emailSubject}'");
             }
             catch (Exception ex)
             {
