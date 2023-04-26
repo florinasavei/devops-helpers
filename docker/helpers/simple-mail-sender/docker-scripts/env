@@ -1,4 +1,5 @@
-﻿EMAILSENDER=email-from-env@company.com
+﻿API_KEY=sophana
+EMAILSENDER=email-from-env@company.com
 EMAILPASSWORD=thesupersecretpasswordenv
 SMTPSERVER=smtp.theserverenv.com
 SMPTPORT=587

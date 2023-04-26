@@ -8,6 +8,7 @@
       }
     }
   },
+  "API_KEY": "sophana",
   "EMAILSENDER": "email@company.com",
   "EMAILPASSWORD": "thesupersecretpassword",
   "SMTPSERVER": "smtp.theserver.com",

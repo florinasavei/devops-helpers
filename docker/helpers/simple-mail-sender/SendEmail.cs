@@ -18,19 +18,13 @@ namespace simple_mail_sender
     public static class SendEmail
     {
         [FunctionName("SendEmail")]
-        public static async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+        public static async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
             try
             {
                 log.LogInformation("C# HTTP trigger function processed a request.");
-
-                string name = req.Query["name"];
-
-                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                dynamic data = JsonConvert.DeserializeObject(requestBody);
-                name = name ?? data?.name;
 
 
                 var config = new ConfigurationBuilder()
@@ -50,6 +44,18 @@ namespace simple_mail_sender
                 bool enableSSL = bool.Parse(config["ENABLESSL"]);
                 bool useDefaultCredentials = bool.Parse(config["USEDEFAULTCREDENTIALS"]);
 
+                string apiKey = config["API_KEY"];
+                if (apiKey == null || !req.Headers.TryGetValue("x-api-key", out var providedApiKey) || providedApiKey != apiKey)
+                {
+                    return new UnauthorizedResult();
+                }
+
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                dynamic data = JsonConvert.DeserializeObject(requestBody);
+                string emailRecepient = data?.recepient;
+                string emailSubject = data?.subject;
+                string emailBody = data?.body;
+
 
                 log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
@@ -63,32 +69,25 @@ namespace simple_mail_sender
                 // Email message
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress(senderEmail);
-                mailMessage.To.Add("benonesimulescu2017@gmail.com");
-                mailMessage.Subject = "Azure Function Email Test";
-                mailMessage.Body = "This is a test email sent from an Azure Function.";
+                mailMessage.To.Add(emailRecepient);
+                mailMessage.Subject = emailSubject;
+                mailMessage.Body = emailBody;
 
                 log.LogInformation($"Sending email from '{senderEmail}' to benonesimulescu2017@gmail.com");
-
 
                 // Send the email
                 smtpClient.Send(mailMessage);
                 log.LogInformation("Email sent successfully.");
 
-                string responseMessage = string.IsNullOrEmpty(name)
-                    ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                    : $"Hello, {name}. This HTTP triggered function executed successfully.";
-
-                return new HttpResponseMessage(HttpStatusCode.OK)
-                {
-                    Content = new StringContent($"Mail sent from email {senderEmail}")
-                };
+                return new OkObjectResult($"Mail sent from email '{senderEmail}' to '{emailRecepient}' with the subhect : {emailSubject}");
             }
             catch (Exception ex)
             {
                 log.LogError(ex.Message);
-                return new HttpResponseMessage(HttpStatusCode.BadRequest)
+
+                return new ObjectResult("Error sending email : " + ex.Message)
                 {
-                    Content = new StringContent("Error sending email : " + ex.Message)
+                    StatusCode = (int)HttpStatusCode.InternalServerError
                 };
             }
 
