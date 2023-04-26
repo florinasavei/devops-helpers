@@ -7,7 +7,6 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Net;
 using Microsoft.Extensions.Configuration;
 using System.Net.Mail;
@@ -25,7 +24,6 @@ namespace simple_mail_sender
             try
             {
                 log.LogInformation("C# HTTP trigger function processed a request.");
-
 
                 var config = new ConfigurationBuilder()
                    .SetBasePath(context.FunctionAppDirectory)
@@ -55,7 +53,6 @@ namespace simple_mail_sender
                 string emailRecepient = data?.recepient;
                 string emailSubject = data?.subject;
                 string emailBody = data?.body;
-
 
                 log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
@@ -90,7 +87,6 @@ namespace simple_mail_sender
                     StatusCode = (int)HttpStatusCode.InternalServerError
                 };
             }
-
         }
     }
 }
