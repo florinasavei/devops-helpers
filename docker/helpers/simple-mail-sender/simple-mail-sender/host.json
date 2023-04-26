@@ -1,0 +1,17 @@
+{
+  "version": "2.0",
+  "logging": {
+    "applicationInsights": {
+      "samplingSettings": {
+        "isEnabled": true,
+        "excludedTypes": "Request"
+      }
+    }
+  },
+  "EMAILSENDER": "email@company.com",
+  "EMAILPASSWORD": "thesupersecretpassword",
+  "SMTPSERVER": "smtp.theserver.com",
+  "SMPTPORT": 587,
+  "ENABLESSL": true,
+  "USEDEFAULTCREDENTIALS": false
+}
