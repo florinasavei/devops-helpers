@@ -67,6 +67,9 @@ namespace simple_mail_sender
                 mailMessage.Subject = "Azure Function Email Test";
                 mailMessage.Body = "This is a test email sent from an Azure Function.";
 
+                log.LogInformation($"Sending email from '{senderEmail}' to benonesimulescu2017@gmail.com");
+
+
                 // Send the email
                 smtpClient.Send(mailMessage);
                 log.LogInformation("Email sent successfully.");
@@ -77,11 +80,12 @@ namespace simple_mail_sender
 
                 return new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StringContent(responseMessage)
+                    Content = new StringContent($"Mail sent from email {senderEmail}")
                 };
             }
             catch (Exception ex)
             {
+                log.LogError(ex.Message);
                 return new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
                     Content = new StringContent("Error sending email : " + ex.Message)

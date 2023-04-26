@@ -1,0 +1,1 @@
+docker build -t asaveiflorin/sampleazurefunction-mail-sender .

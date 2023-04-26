@@ -6,14 +6,14 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["simple-mail-sender/simple-mail-sender.csproj", "simple-mail-sender/"]
-RUN dotnet restore "simple-mail-sender/simple-mail-sender.csproj"
+COPY ["sampleazurefunction-mail-sender.csproj", "."]
+RUN dotnet restore "./sampleazurefunction-mail-sender.csproj"
 COPY . .
-WORKDIR "/src/simple-mail-sender"
-RUN dotnet build "simple-mail-sender.csproj" -c Release -o /app/build
+WORKDIR "/src/."
+RUN dotnet build "sampleazurefunction-mail-sender.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "simple-mail-sender.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "sampleazurefunction-mail-sender.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /home/site/wwwroot

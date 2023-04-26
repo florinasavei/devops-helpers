@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "simple-mail-sender": {
+    "sampleazurefunction-mail-sender": {
       "commandName": "Project"
     },
     "Docker": {

@@ -1,0 +1,1 @@
+docker run --env-file ./docker-scripts/env -p 8080:80 asaveiflorin/sampleazurefunction-mail-sender

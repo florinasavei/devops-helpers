@@ -1,0 +1,6 @@
+﻿EMAILSENDER=email-from-env@company.com
+EMAILPASSWORD=thesupersecretpasswordenv
+SMTPSERVER=smtp.theserverenv.com
+SMPTPORT=587
+ENABLESSL=true
+USEDEFAULTCREDENTIALS=false
